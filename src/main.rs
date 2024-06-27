@@ -16,7 +16,7 @@ use std::{env, fs};
 use tree::{build_huff_tree, get_huffe};
 
 const FILE_EXTENSION: &str = ".whar";
-const SPEC_VERSION: &str = "0.0.1";
+const SPEC_VERSION: &str = "0.1.0";
 
 const BASE64_ENGINE: engine::GeneralPurpose =
     engine::GeneralPurpose::new(&alphabet::BIN_HEX, general_purpose::NO_PAD);
@@ -100,10 +100,6 @@ fn main() {
 
     'out: while let Some(arg) = args.next() {
         match &arg[..] {
-            "-h" | "--help" => {
-                // TODO: Help
-                println!("NOTE: help is unimplemented");
-            }
             "a" | "archive" => {
                 // Get archive or output path
                 let archive_path: String = match args.next() {
@@ -308,9 +304,22 @@ fn main() {
                     }
                 }
             }
-            _ => {
-                println!("ERROR: Unrecognized command: <{}>", arg);
-                println!("Available commands:\narchive, extract");
+            "-h" | "--help" | _ => {
+                println!(
+                    "whar - weird huffman archiver (spec {}) : Dylan Donnell\n",
+                    SPEC_VERSION
+                );
+
+                println!("Usage: whar <command> <archive_name> [<file_names>...]\n");
+
+                println!("Commands:\n");
+                println!(" a | archive : archive files");
+                println!(" x | extract : extract files from archive");
+                println!(" h | help : print this help message");
+
+                println!("\nExamples:\n");
+                println!("whar a files file1.jpg file2.md \n# Creates an archive named 'files.whar' containing the file1.jpg and file2.md\n");
+                println!("whar x files.whar \n# Extracts the the archive 'files.whar'");
             }
         }
     }
