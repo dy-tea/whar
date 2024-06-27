@@ -1,0 +1,9 @@
+[package]
+name = "whar"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+base64 = "0.22.1"
+bincode = "1.3.3"
+serde = { version = "1.0.203", features = ["derive"] }
